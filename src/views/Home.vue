@@ -73,56 +73,56 @@
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading'
-import moment from 'moment'
+import InfiniteLoading from "vue-infinite-loading";
+import moment from "moment";
 
-import VideoCard from '@/components/VideoCard'
-import VideoService from '@/services/VideoService'
+import VideoCard from "@/components/VideoCard";
+import VideoService from "@/services/VideoService";
 
 export default {
-  name: 'Home',
+  name: "Home",
   data: () => ({
     loading: false,
     loaded: false,
     errored: false,
     videos: [],
-    page: 1
+    page: 1,
   }),
   methods: {
     async getVideos($state) {
       if (!this.loaded) {
-        this.loading = true
+        this.loading = true;
       }
 
-      const videos = await VideoService.getAll('public', { page: this.page })
+      const videos = await VideoService.getAll("public", { page: this.page })
         .catch((err) => {
-          console.log(err)
-          this.errored = true
+          console.log(err);
+          this.errored = true;
         })
         .finally(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
 
-      if (typeof videos === 'undefined') return
+      if (typeof videos === "undefined") return;
 
       if (videos.data.data.length) {
-        this.page += 1
-        this.videos.push(...videos.data.data)
-        $state.loaded()
-        this.loaded = true
+        this.page += 1;
+        this.videos.push(...videos.data.data);
+        $state.loaded();
+        this.loaded = true;
       } else {
-        $state.complete()
+        $state.complete();
       }
     },
     dateFormatter(date) {
-      return moment(date).fromNow()
-    }
+      return moment(date).fromNow();
+    },
   },
   components: {
     VideoCard,
-    InfiniteLoading
-  }
-}
+    InfiniteLoading,
+  },
+};
 </script>
 
 <style lang="scss">
