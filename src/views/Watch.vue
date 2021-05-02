@@ -31,6 +31,7 @@
                       ref="videoPlayer"
                       controls
                       style="height: 100%; width: 100%"
+                      :poster="`${url}/uploads/thumbnails/${video.thumbnailUrl}`"
                     >
                       <source
                         :src="`${url}/uploads/videos/${video.url}`"
@@ -83,12 +84,12 @@
                           class="grey--text text--darken-1"
                           ><v-icon>mdi-download</v-icon> Download</v-btn
                         >
-                        <!-- <v-btn text class="grey--text text--darken-1"
+                        <v-btn text class="grey--text text--darken-1"
                           ><v-icon>mdi-share</v-icon> Share</v-btn
                         >
                         <v-btn text class="grey--text text--darken-1"
                           ><v-icon>mdi-playlist-plus</v-icon> Save</v-btn
-                        > -->
+                        >
                       </v-card-actions>
                     </div>
                   </v-card>
