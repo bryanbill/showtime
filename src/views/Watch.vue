@@ -25,13 +25,16 @@
                 tile
                 large
               >
-                <div ref="hello">
+                <div ref="hello" @mousedown="popMenu($event)">
+                 
                   <v-responsive max-height="450">
                     <video
                       ref="videoPlayer"
                       controls
                       style="height: 100%; width: 100%"
                       :poster="`${url}/uploads/thumbnails/${video.thumbnailUrl}`"
+                      id="my-video"
+                      class="video-js"
                     >
                       <source
                         :src="`${url}/uploads/videos/${video.url}`"
@@ -343,6 +346,9 @@ import CommentList from "@/components/comments/CommentList";
 
 export default {
   data: () => ({
+    viewMenu: false,
+    top: "0px",
+    left: "0px",
     loading: false,
     loaded: false,
     errored: false,
@@ -360,11 +366,47 @@ export default {
     url: process.env.VUE_APP_URL,
     signinDialog: false,
     details: {},
+    popItems: [
+      {
+        class: "fa fa-wrench",
+        txt: "One",
+      },
+      {
+        class: "fa fa-check",
+        txt: "Two",
+      },
+      {
+        class: "fa fa-ban",
+        txt: "Three",
+      },
+    ],
+    mousePosition: [],
   }),
   computed: {
     ...mapGetters(["currentUser", "getUrl", "isAuthenticated"]),
   },
   methods: {
+    popMenu(e) {
+      let self = this;
+      e.preventDefault();
+      if (e.button === 2) {
+        let x = e.layerX;
+        let y = e.layerY;
+        self.mousePosition = [x, y];
+      } else if (e.button === 0) {
+        self.mousePosition = ["close"];
+      }
+    },
+    list_item_click(it) {
+      switch (it) {
+        case 0:
+          alert("One");
+          break;
+        case 1:
+          alert("Two");
+          break;
+      }
+    },
     async getVideo(id) {
       this.errored = false;
       this.videoLoading = true;
