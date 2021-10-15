@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default () => {
   const axiosInstance = axios.create({
-    baseURL: process.env.VUE_APP_URL + "/api/v1",
+    baseURL: process.env.VUE_APP_URL + "api/v1",
   });
 
   const token = localStorage.getItem("token");
